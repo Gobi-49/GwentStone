@@ -1,4 +1,43 @@
 [ {
-  "nrCardsInDeck" : 7,
-  "nrDecks" : 2
+  "command" : "getCardsInHand",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getCardAtPosition"
+}, {
+  "command" : "getCardsInHand",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getCardAtPosition"
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 2
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getCardsOnTable"
+}, {
+  "command" : "getCardsInHand",
+  "playerIdx" : 2
+}, {
+  "command" : "getCardsInHand",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerDeck",
+  "playerIdx" : 2
+}, {
+  "command" : "getPlayerDeck",
+  "playerIdx" : 1
 } ]

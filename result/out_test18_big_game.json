@@ -1,4 +1,99 @@
 [ {
-  "nrCardsInDeck" : 15,
-  "nrDecks" : 2
+  "command" : "getPlayerMana",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getEnvironmentCardsInHand",
+  "playerIdx" : 2
+}, {
+  "command" : "getFrozenCardsOnTable"
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 1
+}, {
+  "command" : "getEnvironmentCardsInHand",
+  "playerIdx" : 1
+}, {
+  "command" : "getFrozenCardsOnTable"
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getEnvironmentCardsInHand",
+  "playerIdx" : 1
+}, {
+  "command" : "getFrozenCardsOnTable"
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 2
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getCardAtPosition"
+}, {
+  "command" : "getFrozenCardsOnTable"
+}, {
+  "command" : "getEnvironmentCardsInHand",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 1
+}, {
+  "command" : "getCardAtPosition"
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getEnvironmentCardsInHand",
+  "playerIdx" : 2
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 1
+}, {
+  "command" : "getEnvironmentCardsInHand",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getFrozenCardsOnTable"
+}, {
+  "command" : "getCardAtPosition"
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getCardAtPosition"
+}, {
+  "command" : "getFrozenCardsOnTable"
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 1
+}, {
+  "command" : "getEnvironmentCardsInHand",
+  "playerIdx" : 1
+}, {
+  "command" : "getCardAtPosition"
+}, {
+  "command" : "getFrozenCardsOnTable"
+}, {
+  "command" : "getPlayerMana",
+  "playerIdx" : 2
+}, {
+  "command" : "getPlayerTurn"
+}, {
+  "command" : "getCardsOnTable"
+}, {
+  "command" : "getCardsInHand",
+  "playerIdx" : 1
+}, {
+  "command" : "getCardsInHand",
+  "playerIdx" : 2
+}, {
+  "command" : "getTotalGamesPlayed"
+}, {
+  "command" : "getPlayerTwoWins"
+}, {
+  "command" : "getPlayerOneWins"
 } ]

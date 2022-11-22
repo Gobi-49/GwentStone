@@ -1,4 +1,15 @@
 [ {
-  "nrCardsInDeck" : 5,
-  "nrDecks" : 2
+  "command" : "getPlayerDeck",
+  "playerIdx" : 2
+}, {
+  "command" : "getPlayerDeck",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerHero",
+  "playerIdx" : 1
+}, {
+  "command" : "getPlayerHero",
+  "playerIdx" : 2
+}, {
+  "command" : "getPlayerTurn"
 } ]

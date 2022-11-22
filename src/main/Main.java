@@ -1,5 +1,6 @@
 package main;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import game.LaunchGame;
 import checker.Checker;
 
@@ -72,7 +73,7 @@ public final class Main {
 
         //TODO add here the entry point to your implementation
 
-        LaunchGame.game(inputData,output);
+        LaunchGame.game(inputData,output,objectMapper);
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);

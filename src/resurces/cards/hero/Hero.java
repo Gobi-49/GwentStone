@@ -19,6 +19,9 @@ public class Hero extends Card {
         setHealth(30);
         this.player = player;
     }
+    public void setPlayer(boolean player) {
+        this.player = player;
+    }
     public boolean isPlayer() {
         return player;
     }

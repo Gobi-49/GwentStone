@@ -1,6 +1,7 @@
 package resurces;
 
 import resurces.cards.Card;
+import resurces.cards.enviroment.EnvironmentCard;
 import resurces.cards.minions.MinionClass;
 
 import java.util.ArrayList;
@@ -21,4 +22,5 @@ public class Board {
     public ArrayList<MinionClass> getRow(int x) {
         return board.get(x);
     }
+
 }
