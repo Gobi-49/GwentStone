@@ -11,7 +11,7 @@ public class HeartHoundCard extends EnvironmentCard{
         super(mana, description, colors, name);
     }
 
-    public void use(Board board, int nRow) {
+    public void effect(Board board, int nRow) {
         ArrayList<MinionClass> row = board.getRow(nRow);
         MinionClass aux = row.get(0);
         int nColum = -1, j=-1;
@@ -23,12 +23,47 @@ public class HeartHoundCard extends EnvironmentCard{
             }
         }
         board.removeCard(nRow,nColum);
-        if(nRow < 2) {
-            board.addCard(nRow + 2, aux);
+        switch (nRow) {
+            case 0 -> board.addCard(3, aux);
+            case 1 -> board.addCard(2, aux);
+            case 2 -> board.addCard(1, aux);
+            case 3 -> board.addCard(0, aux);
+        }
+    }
+
+    @Override
+    public void useCard(Board board, int currentMana, int row, boolean player) {
+        if(currentMana < getMana()) {
+            System.out.println("not enought mana");
+            return;
+        }
+        if(player && row < 2) {
+            System.out.println("Does not belong to enemy");
+            return;
+        } else if(!player && row >= 2) {
+            System.out.println("Does not belong to enemy");
+            return;
+        }
+        if(player) {
+            if(row == 3 && board.getRow(0).size() == 5) {
+                System.out.println("Row full");
+                return;
+            }
+            if(row == 2 && board.getRow(1).size() == 5) {
+                System.out.println("Row full");
+                return;
+            }
         }
         else {
-            board.addCard(nRow - 2, aux);
+            if(row == 1 && board.getRow(2).size() == 5) {
+                System.out.println("Row full");
+                return;
+            }
+            if(row == 0 && board.getRow(3).size() == 5) {
+                System.out.println("Row full");
+                return;
+            }
         }
-
+        effect(board,row);
     }
 }
