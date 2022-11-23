@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class EmpressThorina extends Hero{
 
-    public EmpressThorina(int mana, String description, ArrayList<String> colors, String name, boolean player) {
-        super(mana, description, colors, name, player);
+    public EmpressThorina(int mana, String description, ArrayList<String> colors, String name) {
+        super(mana, description, colors, name);
     }
     public void lowBlow(Board board, int nRow) {
         ArrayList<MinionClass> row = board.getRow(nRow);
@@ -29,12 +29,7 @@ public class EmpressThorina extends Hero{
         if(getMana() > currentMana) {
             System.out.println("Not enough mana");
             return;
-        }
-        if(isPlayer()) {
-            if(row < 2) {
-                System.out.println("Row not belong enemy");
-                return;
-            }
+
         } else {
             if(row >= 2) {
                 System.out.println("Row not belong enemy");
@@ -42,5 +37,6 @@ public class EmpressThorina extends Hero{
             }
         }
         lowBlow(board,row);
+        //Todo
     }
 }

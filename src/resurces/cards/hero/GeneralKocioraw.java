@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class GeneralKocioraw extends Hero{
 
-    public GeneralKocioraw(int mana, String description, ArrayList<String> colors, String name, boolean player) {
-        super(mana, description, colors, name, player);
+    public GeneralKocioraw(int mana, String description, ArrayList<String> colors, String name) {
+        super(mana, description, colors, name);
     }
 
     public void bloodThirst(Board board, int nRow) {
@@ -21,18 +21,13 @@ public class GeneralKocioraw extends Hero{
         if(getMana() > currentMana) {
             System.out.println("Not enough mana");
             return;
-        }
-        if(isPlayer()) {
-            if(row >= 2) {
-                System.out.println("Row not belong to player");
-                return;
-            }
         } else {
             if(row < 2) {
                 System.out.println("Row not belong to player");
                 return;
             }
         }
+        // Todo
         bloodThirst(board,row);
     }
 }

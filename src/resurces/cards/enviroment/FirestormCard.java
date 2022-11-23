@@ -1,6 +1,7 @@
 package resurces.cards.enviroment;
 
 import resurces.Board;
+import resurces.Player;
 import resurces.cards.Card;
 import resurces.cards.minions.MinionClass;
 
@@ -13,24 +14,27 @@ public class FirestormCard extends EnvironmentCard{
     }
     public void effect(Board board, int nRow) {
         ArrayList<MinionClass> row = board.getRow(nRow);
-        for(MinionClass i : row) {
-            i.setHealth(i.getHealth() - 1);
+        for(int i=0; i<row.size(); i++) {
+            row.get(i).setHealth( row.get(i).getHealth() - 1);
+            if(row.get(i).getHealth() == 0) {
+                board.removeCard(nRow, i);
+                i--;
+            }
         }
     }
 
     @Override
-    public void useCard(Board board, int currentMana, int row, boolean player) {
-        if(currentMana < getMana()) {
-            System.out.println("not enough mana");
-            return;
+    public String useCard(Board board, Player player, int row) {
+        if(player.getMana() < getMana()) {
+            return "Not enough mana to use environment card.";
         }
-        if(player && row < 2) {
-            System.out.println("Does not belong to enemy");
-            return;
-        } else if(!player && row >= 2) {
-            System.out.println("Does not belong to enemy");
-            return;
+        if(player.isPlayerNr() && row < 2) {
+            return "Chosen row does not belong to the enemy.";
+        } else if(!player.isPlayerNr() && row >= 2) {
+            return "Chosen row does not belong to the enemy.";
         }
+        player.useMana(getMana());
         effect(board,row);
+        return null;
     }
 }

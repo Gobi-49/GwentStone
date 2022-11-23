@@ -3,6 +3,7 @@ package resurces.cards.minions;
 import resurces.Board;
 import resurces.cards.Card;
 import resurces.cards.hero.Hero;
+import resurces.output.MinionOut;
 
 import java.util.ArrayList;
 
@@ -24,11 +25,17 @@ public abstract class MinionClass extends Card {
     public void setFrozen(boolean frozen) {
         this.frozen = frozen;
     }
-    public boolean isFrozen() {
-        return frozen;
+    public void setTank(boolean tank) {
+        this.tank = tank;
     }
     public boolean isPlayed() {
         return played;
+    }
+    public boolean isFrozen() {
+        return frozen;
+    }
+    public boolean isTank() {
+        return tank;
     }
     public void setAttackDamage(int attackDamage) {
         this.attackDamage = attackDamage;
@@ -41,12 +48,6 @@ public abstract class MinionClass extends Card {
     }
     public int getHealth() {
         return health;
-    }
-    public void setTank(boolean tank) {
-        this.tank = tank;
-    }
-    public boolean isTank() {
-        return tank;
     }
 
     public void attackCard(Board board, int xAttacker, int yAttacker, int xAttacked, int yAttacked) {
@@ -110,5 +111,8 @@ public abstract class MinionClass extends Card {
         if (hero.getHealth() <= 0) {
             System.out.println("Player killed enemy hero");
         }
+    }
+    public MinionOut convertToOut() {
+        return new MinionOut(getMana(),attackDamage,health,getDescription(),getColors(),getName());
     }
 }

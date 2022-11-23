@@ -21,6 +21,7 @@ public class Player {
     private int maxMana;
     private int wins = 0;
     private boolean playerNr = false;
+    private boolean turn = false;
     public Player(int nrCardInDeck) {
         this.nrCardInDeck = nrCardInDeck;
     }
@@ -53,6 +54,9 @@ public class Player {
     public ArrayList<Card> getHand() {
         return hand;
     }
+    public void useMana(int mana) {
+        this.mana -= mana;
+    }
     public int getMana() {
         return mana;
     }
@@ -65,16 +69,19 @@ public class Player {
     public boolean isPlayerNr() {
         return playerNr;
     }
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+    public boolean isTurn() {
+        return turn;
+    }
 
     public void incrementMana() {
         if(maxMana == 10) {
-            mana = maxMana;
+            mana += maxMana;
         }
         maxMana++;
         mana+=maxMana;
-        if(mana > 10) {
-            mana = 10;
-        }
     }
     public void addCardToHand() {
         if(deck.getCards().size() > 0) {
@@ -85,22 +92,20 @@ public class Player {
     public void incrementWins() {
         wins++;
     }
-    public void placeCard(int index, Board board) {
+    public String placeCard(int index, Board board) {
         if(hand.get(index) instanceof EnvironmentCard) {
-            System.out.println("Cannot place environment card");
-            return;
+            return "Cannot place environment card on table.";
         }
         Card card = hand.get(index);
         if (mana < card.getMana()) {
-            System.out.println("Not enough mana");
-            return;
+            return "Not enough mana to place card on table.";
         }
         if (    card instanceof RipperCard ||
                 card instanceof MirajCard ||
                 card instanceof GoliathCard ||
                 card instanceof WardenClass) {
-            if (board.getRow(1).size() == 5 || board.getRow(2).size() == 5) {
-                System.out.println("Cannot place card on table since row in full");
+            if (board.getRow(1).size() == 5 && playerNr || board.getRow(2).size() == 5 && !playerNr) {
+                return "Cannot place card on table since row is full.";
             }
             if(playerNr) {
                 board.getRow(1).add((MinionClass) card);
@@ -111,7 +116,7 @@ public class Player {
         }
         else {
             if (board.getRow(0).size() == 5 || board.getRow(3).size() == 5) {
-                System.out.println("Cannot place card on table since row in full");
+                return "Cannot place card on table since row is full.";
             }
             if(playerNr) {
                 board.getRow(0).add((MinionClass) card);
@@ -120,5 +125,8 @@ public class Player {
                 board.getRow(3).add((MinionClass) card);
             }
         }
+        hand.remove(index);
+        mana -= card.getMana();
+        return null;
     }
 }

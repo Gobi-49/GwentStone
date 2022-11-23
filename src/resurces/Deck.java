@@ -86,20 +86,20 @@ public class Deck {
                 }
                 case "Firestorm" -> {
                     card = new FirestormCard(cards.get(i).getMana(),
-                            cards.get(i).getName(), cards.get(i).getColors(),
-                            cards.get(i).getDescription());
+                            cards.get(i).getDescription(), cards.get(i).getColors(),
+                            cards.get(i).getName());
                     this.cards.add(card);
                 }
                 case "Winterfell" -> {
                     card = new Winterfell(cards.get(i).getMana(),
-                            cards.get(i).getName(), cards.get(i).getColors(),
-                            cards.get(i).getDescription());
+                            cards.get(i).getDescription(), cards.get(i).getColors(),
+                            cards.get(i).getName());
                     this.cards.add(card);
                 }
                 case "Heart Hound" -> {
                     card = new HeartHoundCard(cards.get(i).getMana(),
-                            cards.get(i).getName(), cards.get(i).getColors(),
-                            cards.get(i).getDescription());
+                            cards.get(i).getDescription(), cards.get(i).getColors(),
+                            cards.get(i).getName());
                     this.cards.add(card);
                 }
             }

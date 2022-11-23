@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class KingMudface extends Hero{
 
-    public KingMudface(int mana, String description, ArrayList<String> colors, String name, boolean player) {
-        super(mana, description, colors, name, player);
+    public KingMudface(int mana, String description, ArrayList<String> colors, String name) {
+        super(mana, description, colors, name);
     }
 
     public void earthBorn(Board board, int nRow) {
@@ -22,17 +22,13 @@ public class KingMudface extends Hero{
             System.out.println("Not enough mana");
             return;
         }
-        if(isPlayer()) {
-            if(row >= 2) {
-                System.out.println("Row not belong to player");
-                return;
-            }
-        } else {
+         else {
             if(row < 2) {
                 System.out.println("Row not belong to player");
                 return;
             }
         }
         earthBorn(board,row);
+         //Todo
     }
 }

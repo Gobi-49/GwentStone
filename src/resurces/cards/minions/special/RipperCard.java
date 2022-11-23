@@ -19,26 +19,26 @@ public class RipperCard extends MinionClass {
             System.out.println("Does not belong to enemy");
             return;
         }
-        if(isPlayed()) {
-            System.out.println("Card attacked");
-            return;
-        }
-        if(isFrozen()) {
-            System.out.println("Card frozen");
-            return;
-        }
+//        if(isPlayed()) {
+//            System.out.println("Card attacked");
+//            return;
+//        }
+//        if(isFrozen()) {
+//            System.out.println("Card frozen");
+//            return;
+//        }
         ArrayList<MinionClass> frontRow;
         if(player) {
             frontRow = board.getRow(2);
         } else {
             frontRow = board.getRow(1);
         }
-        for(MinionClass i :frontRow) {
-            if(i.isTank()) {
-                System.out.println("Card not Tank");
-                return;
-            }
-        }
+//        for(MinionClass i :frontRow) {
+//            if(i.isTank()) {
+//                System.out.println("Card not Tank");
+//                return;
+//            }
+//        }
         MinionClass attacked = board.getRow(xAttacked).get(yAttacked);
         WeakKnees(attacked);
     }

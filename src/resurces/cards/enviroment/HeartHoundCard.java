@@ -1,6 +1,7 @@
 package resurces.cards.enviroment;
 
 import resurces.Board;
+import resurces.Player;
 import resurces.cards.minions.MinionClass;
 
 import java.util.ArrayList;
@@ -32,38 +33,33 @@ public class HeartHoundCard extends EnvironmentCard{
     }
 
     @Override
-    public void useCard(Board board, int currentMana, int row, boolean player) {
-        if(currentMana < getMana()) {
-            System.out.println("not enought mana");
-            return;
+    public String useCard(Board board, Player player, int row) {
+        if(player.getMana() < getMana()) {
+            return "Not enough mana to use environment card.";
         }
-        if(player && row < 2) {
-            System.out.println("Does not belong to enemy");
-            return;
-        } else if(!player && row >= 2) {
-            System.out.println("Does not belong to enemy");
-            return;
+        if(player.isPlayerNr() && row < 2) {
+            return "Chosen row does not belong to the enemy.";
+        } else if(!player.isPlayerNr() && row >= 2) {
+            return "Chosen row does not belong to the enemy.";
         }
-        if(player) {
+        if(player.isPlayerNr()) {
             if(row == 3 && board.getRow(0).size() == 5) {
-                System.out.println("Row full");
-                return;
+                return "Cannot steal enemy card since the player's row is full.";
             }
             if(row == 2 && board.getRow(1).size() == 5) {
-                System.out.println("Row full");
-                return;
+                return "Cannot steal enemy card since the player's row is full.";
             }
         }
         else {
             if(row == 1 && board.getRow(2).size() == 5) {
-                System.out.println("Row full");
-                return;
+                return "Cannot steal enemy card since the player's row is full.";
             }
             if(row == 0 && board.getRow(3).size() == 5) {
-                System.out.println("Row full");
-                return;
+                return "Cannot steal enemy card since the player's row is full.";
             }
         }
+        player.useMana(getMana());
         effect(board,row);
+        return null;
     }
 }

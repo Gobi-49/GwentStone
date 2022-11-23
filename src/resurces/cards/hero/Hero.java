@@ -2,6 +2,8 @@ package resurces.cards.hero;
 
 import resurces.Board;
 import resurces.cards.Card;
+import resurces.output.HeroOut;
+import resurces.output.MinionOut;
 
 import java.util.ArrayList;
 
@@ -14,18 +16,18 @@ public class Hero extends Card {
     public int getHealth() {
         return health;
     }
-    public Hero(int mana, String description, ArrayList<String> colors, String name, boolean player) {
+    public Hero(int mana, String description, ArrayList<String> colors, String name) {
         super(mana, description, colors, name);
         setHealth(30);
-        this.player = player;
     }
+    public void useAbility(Board board, int row, int currentMana) {}
     public void setPlayer(boolean player) {
         this.player = player;
     }
     public boolean isPlayer() {
         return player;
     }
-
-    public void useAbility(Board board, int row, int currentMana) {}
-
+    public HeroOut convertToOut() {
+        return new HeroOut(getMana(),getDescription(),getColors(),getName());
+    }
 }

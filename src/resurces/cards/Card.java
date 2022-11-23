@@ -1,5 +1,7 @@
 package resurces.cards;
 
+import fileio.CardInput;
+
 import java.util.ArrayList;
 
 public class Card {
@@ -46,4 +48,5 @@ public class Card {
     public String getName() {
         return name;
     }
+    
 }

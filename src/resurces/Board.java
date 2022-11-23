@@ -22,5 +22,16 @@ public class Board {
     public ArrayList<MinionClass> getRow(int x) {
         return board.get(x);
     }
-
+    public ArrayList<ArrayList<MinionClass>> getBoard() {
+        return board;
+    }
+    public BoardOut convertOut() {
+        BoardOut out = new BoardOut();
+        for(int i=0; i<4; i++) {
+            for(int j=0; j<board.get(i).size(); j++) {
+                out.insertOutCart(board.get(i).get(j).convertToOut(),i);
+            }
+        }
+        return out;
+    }
 }
