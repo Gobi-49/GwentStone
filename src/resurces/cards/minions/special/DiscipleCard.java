@@ -26,19 +26,6 @@ public class DiscipleCard extends MinionClass {
             System.out.println("Card frozen");
             return "Attacker card is frozen.";
         }
-        ArrayList<MinionClass> frontRow;
-        if(!board.getRow(xAttacked).get(yAttacked).isTank()) {
-            if(player && !board.getRow(xAttacked).get(yAttacked).isTank()) {
-                frontRow = board.getRow(2);
-            } else {
-                frontRow = board.getRow(1);
-            }
-            for(MinionClass i :frontRow) {
-                if(i.isTank()) {
-                    return "Attacked card is not of type 'Tank'.";
-                }
-            }
-        }
         MinionClass attacked = board.getRow(xAttacked).get(yAttacked);
         godsPlan(attacked);
         setPlayed(true);

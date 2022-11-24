@@ -57,8 +57,10 @@ public class LaunchGame {
         int p1Deck = input.getGames().get(gameNr).getStartGame().getPlayerOneDeckIdx();
         int p2Deck = input.getGames().get(gameNr).getStartGame().getPlayerTwoDeckIdx();
         int shuffleSeed = input.getGames().get(gameNr).getStartGame().getShuffleSeed();
-        p1.setDeck(new Deck(p1.getAllDecks().get(p1Deck).getCards() ));
-        p2.setDeck(new Deck(p2.getAllDecks().get(p2Deck).getCards()));
+        p1.setDeck(new Deck());
+        p2.setDeck(new Deck());
+        p1.getDeck().copyCardsFromDecks(p1.getAllDecks().get(p1Deck).getCards(), p1.getNrCardInDeck());
+        p2.getDeck().copyCardsFromDecks(p2.getAllDecks().get(p2Deck).getCards(), p2.getNrCardInDeck());
         p1.getDeck().shuffleCards(shuffleSeed);
         p2.getDeck().shuffleCards(shuffleSeed);
         String heroName = input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getName();

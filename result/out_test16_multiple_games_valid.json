@@ -271,7 +271,7 @@
     "colors" : [ "Red", "Blue", "Pink" ],
     "name" : "Berserker",
     "attackDamage" : 5,
-    "health" : 2
+    "health" : 1
   } ], [ ], [ {
     "mana" : 1,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",

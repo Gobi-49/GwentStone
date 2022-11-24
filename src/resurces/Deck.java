@@ -105,6 +105,80 @@ public class Deck {
             }
         }
     }
+    public void copyCardsFromDecks(ArrayList<Card> cards, int nrCardInDeck) {
+        for (int i=0; i < nrCardInDeck; i++) {
+            Card card;
+            switch (cards.get(i).getName()) {
+                case "Berserker" -> {
+                    card = new BerserkerCard(cards.get(i).getName(),
+                            cards.get(i).getColors(), cards.get(i).getDescription(),
+                            cards.get(i).getMana(), ((MinionClass)cards.get(i)).getAttackDamage(), ((MinionClass)cards.get(i)).getHealth());
+                    this.cards.add(card);
+                }
+                case "Goliath" -> {
+                    card = new GoliathCard(cards.get(i).getName(),
+                            cards.get(i).getColors(), cards.get(i).getDescription(),
+                            cards.get(i).getMana(), ((MinionClass)cards.get(i)).getAttackDamage(), ((MinionClass)cards.get(i)).getHealth());
+                    this.cards.add(card);
+                }
+                case "Sentinel" -> {
+                    card = new SenitnelCard(cards.get(i).getName(),
+                            cards.get(i).getColors(), cards.get(i).getDescription(),
+                            cards.get(i).getMana(), ((MinionClass)cards.get(i)).getAttackDamage(), ((MinionClass)cards.get(i)).getHealth());
+                    this.cards.add(card);
+                }
+                case "Warden" -> {
+                    card = new WardenClass(cards.get(i).getName(),
+                            cards.get(i).getColors(), cards.get(i).getDescription(),
+                            cards.get(i).getMana(), ((MinionClass)cards.get(i)).getAttackDamage(), ((MinionClass)cards.get(i)).getHealth());
+                    this.cards.add(card);
+                }
+                case "The Cursed One" -> {
+                    card = new CursedCard(cards.get(i).getName(),
+                            cards.get(i).getColors(), cards.get(i).getDescription(),
+                            cards.get(i).getMana(), ((MinionClass)cards.get(i)).getAttackDamage(), ((MinionClass)cards.get(i)).getHealth());
+                    this.cards.add(card);
+                }
+                case "Disciple" -> {
+                    card = new DiscipleCard(cards.get(i).getName(),
+                            cards.get(i).getColors(), cards.get(i).getDescription(),
+                            cards.get(i).getMana(), ((MinionClass)cards.get(i)).getAttackDamage(), ((MinionClass)cards.get(i)).getHealth());
+                    this.cards.add(card);
+                }
+                case "Miraj" -> {
+                    card = new MirajCard(cards.get(i).getName(),
+                            cards.get(i).getColors(), cards.get(i).getDescription(),
+                            cards.get(i).getMana(), ((MinionClass)cards.get(i)).getAttackDamage(), ((MinionClass)cards.get(i)).getHealth()) {
+                    };
+                    this.cards.add(card);
+                }
+                case "The Ripper" -> {
+                    card = new RipperCard(cards.get(i).getName(),
+                            cards.get(i).getColors(), cards.get(i).getDescription(),
+                            cards.get(i).getMana(), ((MinionClass)cards.get(i)).getAttackDamage(), ((MinionClass)cards.get(i)).getHealth());
+                    this.cards.add(card);
+                }
+                case "Firestorm" -> {
+                    card = new FirestormCard(cards.get(i).getMana(),
+                            cards.get(i).getDescription(), cards.get(i).getColors(),
+                            cards.get(i).getName());
+                    this.cards.add(card);
+                }
+                case "Winterfell" -> {
+                    card = new Winterfell(cards.get(i).getMana(),
+                            cards.get(i).getDescription(), cards.get(i).getColors(),
+                            cards.get(i).getName());
+                    this.cards.add(card);
+                }
+                case "Heart Hound" -> {
+                    card = new HeartHoundCard(cards.get(i).getMana(),
+                            cards.get(i).getDescription(), cards.get(i).getColors(),
+                            cards.get(i).getName());
+                    this.cards.add(card);
+                }
+            }
+        }
+    }
     public void shuffleCards(int seed) {
         Random rand = new Random(seed);
         shuffle(cards,rand);

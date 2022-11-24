@@ -86,7 +86,7 @@ public class DebugCommands {
         getCardAtPosition.put("command", "getCardAtPosition");
         getCardAtPosition.put("x", x);
         getCardAtPosition.put("y", y);
-        if(y > board.getRow(x).size()) {
+        if(y > board.getRow(x).size() || board.getRow(x).size() == 0) {
             getCardAtPosition.put("output", "No card available at that position.");
             output.add(getCardAtPosition) ;
             return;
