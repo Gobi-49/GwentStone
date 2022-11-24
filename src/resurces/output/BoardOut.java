@@ -1,4 +1,4 @@
-package resurces;
+package resurces.output;
 
 import resurces.cards.minions.MinionClass;
 import resurces.output.MinionOut;

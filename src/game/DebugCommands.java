@@ -1,9 +1,8 @@
 package game;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import fileio.Coordinates;
 import resurces.Board;
-import resurces.BoardOut;
+import resurces.output.BoardOut;
 import resurces.Player;
 import resurces.cards.Card;
 import resurces.cards.enviroment.EnvironmentCard;
@@ -89,6 +88,7 @@ public class DebugCommands {
         getCardAtPosition.put("y", y);
         if(y > board.getRow(x).size()) {
             getCardAtPosition.put("output", "No card available at that position.");
+            output.add(getCardAtPosition) ;
             return;
         } else {
             getCardAtPosition.putPOJO("output", board.getRow(x).get(y).convertToOut());

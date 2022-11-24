@@ -1,8 +1,7 @@
 package resurces;
 
-import resurces.cards.Card;
-import resurces.cards.enviroment.EnvironmentCard;
 import resurces.cards.minions.MinionClass;
+import resurces.output.BoardOut;
 
 import java.util.ArrayList;
 
@@ -33,5 +32,12 @@ public class Board {
             }
         }
         return out;
+    }
+    public void resetBoard() {
+        for(ArrayList<MinionClass> i : board) {
+            while (i.size() > 0) {
+                i.remove(0);
+            }
+        }
     }
 }

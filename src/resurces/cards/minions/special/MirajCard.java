@@ -16,33 +16,34 @@ public class MirajCard extends MinionClass {
         setHealth(card.getHealth());
         card.setHealth(x);
     }
-    public void useAbility(Board board, int xAttacker, int yAttacker, int xAttacked, int yAttacked) {
+    public String useAbility(Board board, int xAttacker, int yAttacker, int xAttacked, int yAttacked) {
         boolean player = (xAttacker < 2); // true -> playerTwo ; false -> playerOne
         if(xAttacker < 2 && xAttacked < 2 || xAttacker >= 2 && xAttacked >= 2) {
-            System.out.println("Does not belong to enemy");
-            return;
+            return "Attacked card does not belong to the enemy.";
         }
-//        if(isPlayed()) {
-//            System.out.println("Card attacked");
-//            return;
-//        }
-//        if(isFrozen()) {
-//            System.out.println("Card frozen");
-//            return;
-//        }
+        if(isPlayed()) {
+            return "Attacker card has already attacked this turn.";
+        }
+        if(isFrozen()) {
+            return "Attacker card is frozen.";
+        }
         ArrayList<MinionClass> frontRow;
-        if(player) {
-            frontRow = board.getRow(2);
-        } else {
-            frontRow = board.getRow(1);
+        if(!board.getRow(xAttacked).get(yAttacked).isTank()) {
+            if(player && !board.getRow(xAttacked).get(yAttacked).isTank()) {
+                frontRow = board.getRow(2);
+            } else {
+                frontRow = board.getRow(1);
+            }
+            for(MinionClass i :frontRow) {
+                if(i.isTank()) {
+                    return "Attacked card is not of type 'Tank'.";
+                }
+            }
         }
-//        for(MinionClass i :frontRow) {
-//            if(i.isTank()) {
-//                System.out.println("Card not Tank");
-//                return;
-//            }
-//        }
         MinionClass attacked = board.getRow(xAttacked).get(yAttacked);
         skyjack(attacked);
+        setPlayed(true);
+        return null;
     }
+
 }

@@ -1,6 +1,7 @@
 package resurces.cards.hero;
 
 import resurces.Board;
+import resurces.Player;
 import resurces.cards.minions.MinionClass;
 
 import java.util.ArrayList;
@@ -13,26 +14,34 @@ public class LordRoyce extends Hero{
 
     public void subZero(Board board, int nRow) {
         ArrayList<MinionClass> row = board.getRow(nRow);
+        if(row.size() < nRow)
+            return;
         MinionClass aux = row.get(0);
         for (MinionClass i : row) {
             if (aux.getAttackDamage() < i.getAttackDamage()) {
                 aux = i;
             }
         }
-//        aux.setFrozen(true);
+        aux.setFrozen(true);
     }
-    public void useAbility(Board board, int row, int currentMana) {
-        if(getMana() > currentMana) {
-            System.out.println("Not enough mana");
-            return;
 
-        } else {
-            if(row >= 2) {
-                System.out.println("Row not belong enemy");
-                return;
-            }
+    @Override
+    public String useAbility(Board board, int row, Player player) {
+        if(getMana() > player.getMana()) {
+            return "Not enough mana to use hero's ability.";
         }
+        if(isPlayed()) {
+            return "Hero has already attacked this turn.";
+        }
+        if(row >= 2 && !player.isPlayerNr()) {
+            return "Selected row does not belong to the enemy.";
+        }
+        if(row < 2 && player.isPlayerNr()) {
+            return "Selected row does not belong to the enemy.";
+        }
+        player.useMana(getMana());
         subZero(board,row);
-        //Todo
+        setPlayed(true);
+        return null;
     }
 }

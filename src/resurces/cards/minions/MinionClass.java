@@ -50,49 +50,49 @@ public abstract class MinionClass extends Card {
         return health;
     }
 
-    public void attackCard(Board board, int xAttacker, int yAttacker, int xAttacked, int yAttacked) {
+    public String  attackCard(Board board, int xAttacker, int yAttacker, int xAttacked, int yAttacked) {
         boolean player = (xAttacker < 2); // true -> playerTwo ; false -> playerOne
         if(xAttacker < 2 && xAttacked < 2 || xAttacker >= 2 && xAttacked >= 2) {
-            System.out.println("Does not belong to enemy");
-            return;
+            return "Attacked card does not belong to the enemy.";
         }
         if(played) {
-            System.out.println("Card attacked");
-            return;
+            return "Attacker card has already attacked this turn.";
         }
         if(frozen) {
-            System.out.println("Card frozen");
-            return;
+            return "Attacker card is frozen.";
         }
         ArrayList<MinionClass> frontRow;
-        if(player) {
-            frontRow = board.getRow(2);
-        } else {
-            frontRow = board.getRow(1);
-        }
-        for(MinionClass i :frontRow) {
-            if(i.isTank()) {
-                System.out.println("Card not Tank");
-                return;
+        if(!board.getRow(xAttacked).get(yAttacked).isTank()) {
+            if(player && !board.getRow(xAttacked).get(yAttacked).isTank()) {
+                frontRow = board.getRow(2);
+            } else {
+                frontRow = board.getRow(1);
+            }
+            for(MinionClass i :frontRow) {
+                if(i.isTank()) {
+                    return "Attacked card is not of type 'Tank'.";
+                }
             }
         }
-        MinionClass attacker = board.getRow(xAttacker).get(yAttacker);
         MinionClass attacked = board.getRow(xAttacked).get(yAttacked);
-        attacked.setHealth(getHealth() - attacker.attackDamage);
+        attacked.setHealth(attacked.getHealth() - attackDamage);
+
         if(attacked.getHealth() <= 0) {
             board.removeCard(xAttacked,yAttacked);
         }
+        setPlayed(true);
+        return null;
     }
-    public void useAbility(Board board, int xAttacker, int yAttacker, int xAttacked, int yAttacked) {}
-    public void attackHero(Board board, int xAttacker, int yAttacker, Hero hero) {
+    public String useAbility(Board board, int xAttacker, int yAttacker, int xAttacked, int yAttacked) {
+        return null;
+    }
+    public String attackHero(Board board, int xAttacker, int yAttacker, Hero hero) {
         boolean player = (xAttacker < 2); // true -> playerTwo ; false -> playerOne
         if(played) {
-            System.out.println("Card attacked");
-            return;
+            return "Attacker card has already attacked this turn.";
         }
         if(frozen) {
-            System.out.println("Card frozen");
-            return;
+            return "Attacker card is frozen.";
         }
         ArrayList<MinionClass> frontRow;
         if(player) {
@@ -102,15 +102,19 @@ public abstract class MinionClass extends Card {
         }
         for(MinionClass i :frontRow) {
             if(i.isTank()) {
-                System.out.println("Card not Tank");
-                return;
+                return "Attacked card is not of type 'Tank'.";
             }
         }
         MinionClass attacker = board.getRow(xAttacker).get(yAttacker);
         hero.setHealth(hero.getHealth() - attacker.getAttackDamage());
         if (hero.getHealth() <= 0) {
-            System.out.println("Player killed enemy hero");
+            if(player)
+                return "Player two killed the enemy hero.";
+            else
+                return "Player one killed the enemy hero.";
         }
+        setPlayed(true);
+        return null;
     }
     public MinionOut convertToOut() {
         return new MinionOut(getMana(),attackDamage,health,getDescription(),getColors(),getName());

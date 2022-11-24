@@ -1,44 +1,59 @@
-
-
 # Tema POO  - GwentStone
 
-<div align="center"><img src="https://tenor.com/view/witcher3-gif-9340436.gif" width="500px"></div>
-
-#### Assignment Link: [https://ocw.cs.pub.ro/courses/poo-ca-cd/teme/tema](https://ocw.cs.pub.ro/courses/poo-ca-cd/teme/tema)
-
-
-## Skel Structure
-
+## src\ Structure
 * src/
-  * checker/ - checker files
-  * fileio/ - contains classes used to read data from the json files
-  * main/
-      * Main - the Main class runs the checker on your implementation. Add the entry point to your implementation in it. Run Main to test your implementation from the IDE or from command line.
-      * Test - run the main method from Test class with the name of the input file from the command line and the result will be written
-        to the out.txt file. Thus, you can compare this result with ref.
-* input/ - contains the tests in JSON format
-* ref/ - contains all reference output for the tests in JSON format
+  * checker/ (from POO team)
+  * fileio/ (from POO team)
+  * game/ (contains classes related to the games functionality)
+  * main/ (from POO team)
+  * resurces/ (contains classes of different objects from the game)
+    * cards/ (contains clases of the cards used)
+      * environment/ (environment cards)
+      * hero/ (hero cards)
+      * minions/ (minion cards)
+    * output/ (contains classes used to print the output)
 
-## Tests
+The game begins in main where the LaunchGame.game method is called.
 
-1. test01_game_start - 3p
-2. test02_place_card - 4p
-3. test03_place_card_invalid - 4p
-4. test04_use_env_card - 4p
-5. test05_use_env_card_invalid - 4p
-6. test06_attack_card - 4p
-7. test07_attack_card_invalid - 4p
-8. test08_use_card_ability - 4p
-9. test09_use_card_ability_invalid -4p
-10. test10_attack_hero - 4p
-11. test11_attack_hero_invalid - 4p
-12. test12_use_hero_ability_1 - 4p
-13. test13_use_hero_ability_2 - 4p
-14. test14_use_hero_ability_1_invalid - 4p
-15. test15_use_hero_ability_2_invalid - 4p
-16. test16_multiple_games_valid - 5p
-17. test17_multiple_games_invalid - 6p
-18. test18_big_game - 10p
+#### LaunchGame
+We start running the game. To do this I used methods like: prepareGame, preparePlayers in the game method to modularize 
+the code. Before every game I build the decks of the players and to prepare the game with inputs from the json file. 
+After that the game starts.  After each game the values from the players and the board are reset;
 
+The game consists of multiple rounds and rounds consist of two turns(Each player's turn)
+The game reads commands from the json file executes them accordingly from their respective category.
+* The debugging commands are written in the **DebugCommands Class**
+* The statistics commands are written in the **StatsCommands Class**
 
-<div align="center"><img src="https://tenor.com/view/homework-time-gif-24854817.gif" width="500px"></div>
+#### Player
+Each player saves his stats(mana, the hand, whether he is Player One or Player Two, if it is his turn, etc).
+Besides different methods that use the stats, player also implements the placeCard method and the resetPlayer used 
+after each game.
+
+#### Deck
+The Deck class contains the cards that form the deck. It also implements methods like shuffleCards and insertCardsInDeck
+(Insert each cards class in the deck)
+
+#### Board
+The board class represents the table where the cards are placed. The notable methods implemented here are: the resetBoard 
+used after each game and the convertOut(used to print the cards on the table the correct way)
+
+#### MinionClass
+Represents the pattern for all the minions. Besides getters and setters, the class contains the attackCard, attackHero, 
+useAbility(implemented in each special minion) and convertOut
+
+#### Hero
+The Hero class represents the pattern for each hero. The useAbility method is implemented in each hero subclass, 
+convertToOut being a common method
+
+I used a boolean in order to know whether the present hero is the hero of Player One or Player Two, and another one to 
+know if the heroAbility was used this turn
+
+#### EnvironmentCard
+Is the parent of all the environment cards. Each one implements the useCard method and their ability
+
+## Conventions
+* Through the files I used different booleans in order to keep track of which player's which.
+  * Generally the false value means Player One, and the true value means Player Two
+* We used another set of classes from the output package in order to replicate the output from the reference json files
+

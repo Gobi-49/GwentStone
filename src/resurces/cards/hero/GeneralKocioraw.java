@@ -1,6 +1,7 @@
 package resurces.cards.hero;
 
 import resurces.Board;
+import resurces.Player;
 import resurces.cards.minions.MinionClass;
 
 import java.util.ArrayList;
@@ -17,17 +18,24 @@ public class GeneralKocioraw extends Hero{
             i.setAttackDamage(i.getAttackDamage() + 1);
         }
     }
-    public void useAbility(Board board, int row, int currentMana) {
-        if(getMana() > currentMana) {
-            System.out.println("Not enough mana");
-            return;
-        } else {
-            if(row < 2) {
-                System.out.println("Row not belong to player");
-                return;
-            }
+
+    @Override
+    public String useAbility(Board board, int row, Player player) {
+        if (getMana() > player.getMana()) {
+            return "Not enough mana to use hero's ability.";
         }
-        // Todo
-        bloodThirst(board,row);
+        if (isPlayed()) {
+            return "Hero has already attacked this turn.";
+        }
+        if (row >= 2 && player.isPlayerNr()) {
+            return "Selected row does not belong to the current player.";
+        }
+        if (row < 2 && !player.isPlayerNr()) {
+            return "Selected row does not belong to the current player.";
+        }
+        player.useMana(getMana());
+        bloodThirst(board, row);
+        setPlayed(true);
+        return null;
     }
 }

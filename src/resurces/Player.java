@@ -129,4 +129,13 @@ public class Player {
         mana -= card.getMana();
         return null;
     }
+    public void resetPlayer() {
+        deck = null;
+        hero = null;
+        hand = new ArrayList<>();
+        mana = 0;
+        maxMana = 0;
+        playerNr = false;
+        turn = false;
+    }
 }

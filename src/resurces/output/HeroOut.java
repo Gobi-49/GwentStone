@@ -13,9 +13,9 @@ public class HeroOut extends Card {
     public int getHealth() {
         return health;
     }
-    public HeroOut(int mana, String description, ArrayList<String> colors, String name) {
+    public HeroOut(int mana, String description, ArrayList<String> colors, String name, int health) {
         super(mana, description, colors, name);
-        setHealth(30);
+        this.health = health;
     }
     public void useAbility(Board board, int row, int currentMana) {}
 }

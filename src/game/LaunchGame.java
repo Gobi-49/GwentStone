@@ -4,13 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.Coordinates;
 import fileio.GameInput;
 import fileio.Input;
 import resurces.Board;
 import resurces.Player;
 import resurces.Deck;
 import resurces.cards.enviroment.EnvironmentCard;
-import resurces.cards.hero.Hero;
+import resurces.cards.hero.*;
+import resurces.cards.minions.MinionClass;
 import resurces.cards.minions.regular.SenitnelCard;
 
 import java.util.ArrayList;
@@ -22,12 +24,14 @@ public class LaunchGame {
         p2.setPlayerNr(true);
         Board board = new Board();
         preparePlayers(p1,p2,input);
-        prepareGame(p1,p2,input,0);
-        runGame(p1,p2,input.getGames().get(0),board, output, objectMapper);
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
+        for(int i=0; i < input.getGames().size(); i++) {
+            prepareGame(p1,p2,input,i);
+            runGame(p1,p2,input.getGames().get(i),board, output, objectMapper);
+            p1.resetPlayer();
+            p2.resetPlayer();
+            board.resetBoard();
+        }
+
     }
     public static ArrayList<Deck> generateDeckPlayerOne(Input input, int nrCardsInDeck) {
         ArrayList<Deck> decksPlayer = new ArrayList<>();
@@ -57,14 +61,53 @@ public class LaunchGame {
         p2.setDeck(new Deck(p2.getAllDecks().get(p2Deck).getCards()));
         p1.getDeck().shuffleCards(shuffleSeed);
         p2.getDeck().shuffleCards(shuffleSeed);
-        Hero p1Hero = new Hero(input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getMana(),
-                input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getDescription(),
-                input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getColors(),
-                input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getName());
-        Hero p2Hero = new Hero(input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getMana(),
-                input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getDescription(),
-                input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getColors(),
-                input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getName());
+        String heroName = input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getName();
+        Hero p1Hero = null, p2Hero = null;
+        switch (heroName) {
+            case "Lord Royce" ->
+                    p1Hero = new LordRoyce(input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getMana(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getDescription(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getColors(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getName());
+            case "Empress Thorina" ->
+                    p1Hero = new EmpressThorina(input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getMana(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getDescription(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getColors(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getName());
+            case "King Mudface" ->
+                    p1Hero = new KingMudface(input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getMana(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getDescription(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getColors(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getName());
+            case "General Kocioraw" ->
+                    p1Hero = new GeneralKocioraw(input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getMana(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getDescription(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getColors(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerOneHero().getName());
+        }
+        heroName = input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getName();
+        switch (heroName) {
+            case "Lord Royce" ->
+                    p2Hero = new LordRoyce(input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getMana(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getDescription(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getColors(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getName());
+            case "Empress Thorina" ->
+                    p2Hero = new EmpressThorina(input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getMana(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getDescription(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getColors(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getName());
+            case "King Mudface" ->
+                    p2Hero = new KingMudface(input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getMana(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getDescription(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getColors(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getName());
+            case "General Kocioraw" ->
+                    p2Hero = new GeneralKocioraw(input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getMana(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getDescription(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getColors(),
+                            input.getGames().get(gameNr).getStartGame().getPlayerTwoHero().getName());
+        }
         p1.setHero(p1Hero);
         p2.setHero(p2Hero);
         p2.setPlayerNr(true);
@@ -91,6 +134,8 @@ public class LaunchGame {
         int x, y, affectedRow;
         int handIdx;
         String error;
+        MinionClass attacker;
+        Hero hero;
         for(int i=0 ; i < nrActions; i++) {
             action = input.getActions().get(i).getCommand();
             if (action.equals("endPlayerTurn")) {
@@ -100,7 +145,7 @@ public class LaunchGame {
                 } else {
                     nextTurnIsRound = true;
                 }
-                endTurn(p1, p2);
+                endTurn(p1, p2, board);
             }
             switch (action) {
                 case "getPlayerDeck":
@@ -153,23 +198,21 @@ public class LaunchGame {
                 case "getTotalGamesPlayed":
                     ObjectNode getTotalGamesPlayed = objectMapper.createObjectNode();
                     getTotalGamesPlayed.put("command", "getTotalGamesPlayed");
+                    getTotalGamesPlayed.put("output",stats.getTotalGamesPlayed(p1,p2));
                     output.add(getTotalGamesPlayed) ;
-
-                    stats.getTotalGamesPlayed(p1,p2);
                     break;
                 case "getPlayerOneWins":
                     ObjectNode getPlayerOneWins = objectMapper.createObjectNode();
                     getPlayerOneWins.put("command", "getPlayerOneWins");
-                    output.add(getPlayerOneWins) ;
+                    getPlayerOneWins.put("output",stats.getPlayerWins(p1));
 
-                    stats.getPlayerWins(p1);
+                    output.add(getPlayerOneWins) ;
                     break;
                 case "getPlayerTwoWins":
                     ObjectNode getPlayerTwoWins = objectMapper.createObjectNode();
                     getPlayerTwoWins.put("command", "getPlayerTwoWins");
+                    getPlayerTwoWins.put("output",stats.getPlayerWins(p2));
                     output.add(getPlayerTwoWins) ;
-
-                    stats.getPlayerWins(p2);
                     break;
                 case "placeCard":
                     handIdx = input.getActions().get(i).getHandIdx();
@@ -229,13 +272,112 @@ public class LaunchGame {
                         }
                     }
                     break;
-                case "attackCard":
+                case "cardUsesAttack":
+                    x = input.getActions().get(i).getCardAttacker().getX();
+                    y = input.getActions().get(i).getCardAttacker().getY();
+                    attacker = board.getRow(x).get(y);
+                    error = null;
+                    error = attacker.attackCard(board,x,y,input.getActions().get(i).getCardAttacked().getX(),
+                            input.getActions().get(i).getCardAttacked().getY());
+                    if(error != null) {
+                        ObjectNode cardUsesAttack = objectMapper.createObjectNode();
+                        cardUsesAttack.put("command", "cardUsesAttack");
+                        cardUsesAttack.putPOJO("cardAttacker", input.getActions().get(i).getCardAttacker());
+                        cardUsesAttack.putPOJO("cardAttacked", input.getActions().get(i).getCardAttacked());
+                        cardUsesAttack.put("error", error);
+                        output.add(cardUsesAttack) ;
+                    }
+                    break;
+                case "cardUsesAbility":
+                    x = input.getActions().get(i).getCardAttacker().getX();
+                    y = input.getActions().get(i).getCardAttacker().getY();
+                    attacker = board.getRow(x).get(y);
+                    error = attacker.useAbility(board,x,y,input.getActions().get(i).getCardAttacked().getX(),
+                            input.getActions().get(i).getCardAttacked().getY());
+                    if(error != null) {
+                        ObjectNode cardUsesAttack = objectMapper.createObjectNode();
+                        cardUsesAttack.put("command", "cardUsesAbility");
+                        cardUsesAttack.putPOJO("cardAttacker", input.getActions().get(i).getCardAttacker());
+                        cardUsesAttack.putPOJO("cardAttacked", input.getActions().get(i).getCardAttacked());
+                        cardUsesAttack.put("error", error);
+                        output.add(cardUsesAttack) ;
+                    }
+                    break;
+                case "useAttackHero":
+                    x = input.getActions().get(i).getCardAttacker().getX();
+                    y = input.getActions().get(i).getCardAttacker().getY();
+                    error = null;
+                    attacker = board.getRow(x).get(y);
+                    if(p1.isTurn())
+                        error = attacker.attackHero(board,x,y,p2.getHero());
+                    else
+                        error = attacker.attackHero(board,x,y,p1.getHero());
+
+                    if(error != null) {
+                        ObjectNode useAttackHero = objectMapper.createObjectNode();
+                        if(error.equals("Player two killed the enemy hero.")) {
+                            useAttackHero.put("gameEnded", error);
+                            output.add(useAttackHero);
+                            p2.incrementWins();
+                        } else
+                            if(error.equals("Player one killed the enemy hero.")) {
+                                useAttackHero.put("gameEnded", error);
+                                output.add(useAttackHero);
+                                p1.incrementWins();
+                            }
+                             else {
+                            useAttackHero.put("command", "useAttackHero");
+                            useAttackHero.putPOJO("cardAttacker", input.getActions().get(i).getCardAttacker());
+                            useAttackHero.put("error", error);
+                            output.add(useAttackHero) ;
+                        }
+                    }
+                    break;
+                case "useHeroAbility":
+                    affectedRow = input.getActions().get(i).getAffectedRow();
+                    if(p1.isTurn()) {
+                        hero = p1.getHero();
+                        error = hero.useAbility(board,affectedRow,p1);
+                    } else {
+                        hero = p2.getHero();
+                        error = hero.useAbility(board,affectedRow,p2);
+                    }
+                    if(error != null) {
+                        ObjectNode cardUsesAttack = objectMapper.createObjectNode();
+                        cardUsesAttack.put("command", "useHeroAbility");
+                        cardUsesAttack.putPOJO("affectedRow", affectedRow);
+                        cardUsesAttack.put("error", error);
+                        output.add(cardUsesAttack) ;
+                    }
+                    break;
             }
 
         }
     }
-    public static void endTurn(Player p1, Player p2) {
+    public static void endTurn(Player p1, Player p2, Board board) {
+        if(p1.isTurn()) {
+            for (MinionClass j : board.getRow(2)) {
+                j.setFrozen(false);
+            }
+            for (MinionClass j : board.getRow(3)) {
+                j.setFrozen(false);
+            }
+        } else {
+            for (MinionClass j : board.getRow(0)) {
+                j.setFrozen(false);
+            }
+            for (MinionClass j : board.getRow(1)) {
+                j.setFrozen(false);
+            }
+        }
         p1.setTurn(!p1.isTurn());
         p2.setTurn(!p2.isTurn());
+        p1.getHero().setPlayed(false);
+        p2.getHero().setPlayed(false);
+        for (ArrayList<MinionClass> i : board.getBoard()) {
+            for (MinionClass j : i) {
+                j.setPlayed(false);
+            }
+        }
     }
 }
