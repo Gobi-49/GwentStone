@@ -1,22 +1,27 @@
 package resurces.output;
 
-import resurces.cards.minions.MinionClass;
-import resurces.output.MinionOut;
+import resurces.cards.MagicNumbers;
 
 import java.util.ArrayList;
 
 public class BoardOut {
-    private ArrayList<ArrayList<MinionOut>> board = new ArrayList<>(4);
+    private ArrayList<ArrayList<MinionOut>> board = new ArrayList<>();
     public BoardOut() {
-        for(int i=0; i<4; i++) {
+        for (int i = 0; i < MagicNumbers.NRROWS; i++) {
             board.add(new ArrayList<MinionOut>());
         }
     }
-    public void insertOutCart(MinionOut card, int row) {
+
+    /**
+     * Inserts MinionOut cards for output
+     * @param card MinionOut card
+     * @param row where to insert card
+     */
+    public final void insertOutCart(final MinionOut card, final int row) {
         board.get(row).add(card);
     }
 
-    public ArrayList<ArrayList<MinionOut>> getBoard() {
+    public final ArrayList<ArrayList<MinionOut>> getBoard() {
         return board;
     }
 }

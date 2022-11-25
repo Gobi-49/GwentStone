@@ -12,16 +12,17 @@ public class MinionOut extends Card {
     private ArrayList<String> colors;
     private String name;
 
-    public MinionOut(int mana, int attackDamage, int health, String description, ArrayList<String> colors, String name) {
+    public MinionOut(final int mana, final int attackDamage, final int health,
+                     final String description, final ArrayList<String> colors, final String name) {
         super(mana, description, colors, name);
         this.attackDamage = attackDamage;
         this.health = health;
     }
 
-    public int getAttackDamage() {
+    public final int getAttackDamage() {
         return attackDamage;
     }
-    public int getHealth() {
+    public final int getHealth() {
         return health;
     }
 }

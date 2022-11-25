@@ -10,7 +10,8 @@ public class EnvironmentOut extends Card {
     private ArrayList<String> colors;
     private String name;
 
-    public EnvironmentOut(int mana, String description, ArrayList<String> colors, String name) {
+    public EnvironmentOut(final int mana, final String description, final ArrayList<String> colors,
+                          final String name) {
         super(mana, description, colors, name);
     }
 }

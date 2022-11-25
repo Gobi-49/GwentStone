@@ -2,6 +2,7 @@ package game;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import resurces.Board;
+import resurces.cards.MagicNumbers;
 import resurces.output.BoardOut;
 import resurces.Player;
 import resurces.cards.Card;
@@ -17,123 +18,178 @@ import java.util.ArrayList;
 public class DebugCommands {
     private ObjectMapper objectMapper;
     private ArrayNode output;
-    public DebugCommands(ObjectMapper objectMapper, ArrayNode output) {
+    public DebugCommands(final ObjectMapper objectMapper, final ArrayNode output) {
         this.objectMapper = objectMapper;
-        this. output = output;
+        this.output = output;
     }
-    public void getCardsInHand(Player player) {
+
+    /**
+     * Prints to json the players hand
+     * @param player player
+     */
+    public final void getCardsInHand(final Player player) {
         ObjectNode getCardsInHand = objectMapper.createObjectNode();
         getCardsInHand.put("command", "getCardsInHand");
-        if(player.isPlayerNr())
+        if (player.isPlayerNr()) {
             getCardsInHand.put("playerIdx", 2);
-        else
+        } else {
             getCardsInHand.put("playerIdx", 1);
+        }
         ArrayList<Card> cardsOut = new ArrayList<>();
-        for(Card i : player.getHand()) {
-            if (i instanceof MinionClass)
+        for (Card i : player.getHand()) {
+            if (i instanceof MinionClass) {
                 cardsOut.add(((MinionClass) i).convertToOut());
-            else
+            } else {
                 cardsOut.add(((EnvironmentCard) i).convertToOut());
+            }
         }
         getCardsInHand.putPOJO("output", cardsOut);
-        output.add(getCardsInHand) ;
+        output.add(getCardsInHand);
     }
-    public void getPlayerDeck(Player player) {
+
+    /**
+     * prints to json the players deck
+     * @param player player
+     */
+    public final void getPlayerDeck(final Player player) {
         ObjectNode getPlayerDeck = objectMapper.createObjectNode();
         getPlayerDeck.put("command", "getPlayerDeck");
-        if(player.isPlayerNr())
+        if (player.isPlayerNr()) {
             getPlayerDeck.put("playerIdx", 2);
-        else
+        } else {
             getPlayerDeck.put("playerIdx", 1);
+        }
         ArrayList<Card> cardsOut = new ArrayList<>();
-        for(Card i : player.getDeck().getCards()) {
-            if (i instanceof MinionClass)
+        for (Card i : player.getDeck().getCards()) {
+            if (i instanceof MinionClass) {
                 cardsOut.add(((MinionClass) i).convertToOut());
-            else
+            } else {
                 cardsOut.add(((EnvironmentCard) i).convertToOut());
+            }
         }
         getPlayerDeck.putPOJO("output", cardsOut);
-        output.add(getPlayerDeck) ;
+        output.add(getPlayerDeck);
     }
-    public void getCardsOnTable(Board board) {
+
+    /**
+     * prints to json the cards on the table
+     * @param board the table
+     */
+    public final void getCardsOnTable(final Board board) {
         ObjectNode getCardsOnTable = objectMapper.createObjectNode();
         getCardsOnTable.put("command", "getCardsOnTable");
         ArrayList<ArrayList<Card>> table = new ArrayList<>();
         BoardOut boardOut = board.convertOut();
         getCardsOnTable.putPOJO("output", boardOut.getBoard());
-        output.add(getCardsOnTable) ;
+        output.add(getCardsOnTable);
     }
-    public int getPlayerTurn(Player player1) {
-        if(player1.isTurn()) {
+
+    /**
+     * get players turn
+     * @param player1 player
+     * @return 1 or 2, index of player
+     */
+    public final int getPlayerTurn(final Player player1) {
+        if (player1.isTurn()) {
             return 1;
-        }
-        else
+        } else {
             return 2;
+        }
     }
-    public void getPlayerHero(Player player) {
+
+    /**
+     * prints the players hero in json
+     * @param player player
+     */
+    public final void getPlayerHero(final Player player) {
         ObjectNode getPlayerHero = objectMapper.createObjectNode();
         getPlayerHero.put("command", "getPlayerHero");
-        if(player.isPlayerNr())
+        if (player.isPlayerNr()) {
             getPlayerHero.put("playerIdx", 2);
-        else
+        } else {
             getPlayerHero.put("playerIdx", 1);
+        }
         HeroOut heroOut = player.getHero().convertToOut();
         getPlayerHero.putPOJO("output", heroOut);
-        output.add(getPlayerHero) ;
+        output.add(getPlayerHero);
     }
-    public void getCardAtPosition(Board board, int x, int y) {
+
+    /**
+     * prints a card placed on the board
+     * @param board board
+     * @param x row
+     * @param y column
+     */
+    public final void getCardAtPosition(final Board board, final int x, final int y) {
         ObjectNode getCardAtPosition = objectMapper.createObjectNode();
         getCardAtPosition.put("command", "getCardAtPosition");
         getCardAtPosition.put("x", x);
         getCardAtPosition.put("y", y);
-        if(y > board.getRow(x).size() || board.getRow(x).size() == 0) {
+        if (y > board.getRow(x).size() || board.getRow(x).size() == 0) {
             getCardAtPosition.put("output", "No card available at that position.");
-            output.add(getCardAtPosition) ;
+            output.add(getCardAtPosition);
             return;
         } else {
             getCardAtPosition.putPOJO("output", board.getRow(x).get(y).convertToOut());
         }
-        output.add(getCardAtPosition) ;
+        output.add(getCardAtPosition);
     }
-    public void getPlayerMana(Player player) {
+
+    /**
+     * prints players current mana
+     * @param player player
+     */
+    public final void getPlayerMana(final Player player) {
         ObjectNode getPlayerMana = objectMapper.createObjectNode();
         getPlayerMana.put("command", "getPlayerMana");
-        if(player.isPlayerNr())
+        if (player.isPlayerNr()) {
             getPlayerMana.put("playerIdx", 2);
-        else
+        }  else {
             getPlayerMana.put("playerIdx", 1);
+        }
         getPlayerMana.put("output", player.getMana());
-        output.add(getPlayerMana) ;
+        output.add(getPlayerMana);
     }
-    public void getEnvironmentCards(Player player) {
+
+    /**
+     * prints the environment cards from hand
+     * @param player
+     */
+    public final void getEnvironmentCards(final Player player) {
         ObjectNode getEnvironmentCardsInHand = objectMapper.createObjectNode();
         getEnvironmentCardsInHand.put("command", "getEnvironmentCardsInHand");
-        if(player.isPlayerNr())
+        if (player.isPlayerNr()) {
             getEnvironmentCardsInHand.put("playerIdx", 2);
-        else
+        } else {
             getEnvironmentCardsInHand.put("playerIdx", 1);
+        }
         ArrayList<Card> hand = player.getHand();
         ArrayList<EnvironmentOut> environmentCards = new ArrayList<>();
-        for(Card i : hand) {
+        for (Card i : hand) {
             if (i instanceof EnvironmentCard) {
                 environmentCards.add(((EnvironmentCard) i).convertToOut());
             }
         }
         getEnvironmentCardsInHand.putPOJO("output", environmentCards);
-        output.add(getEnvironmentCardsInHand) ;
+        output.add(getEnvironmentCardsInHand);
     }
-    public void getFrozenCards(Board board) {
+
+    /**
+     * get frozen cards from the board
+     * @param board the board
+     */
+    public final void getFrozenCards(final Board board) {
         ObjectNode getFrozenCardsOnTable = objectMapper.createObjectNode();
         getFrozenCardsOnTable.put("command", "getFrozenCardsOnTable");
         ArrayList<MinionClass> frozenCards = new ArrayList<>();
-        for(int i=0; i < 4; i++) {
-            for(MinionClass j : board.getRow(i)) {
-                if(j.isFrozen()) {
+        for (int i = 0; i < MagicNumbers.NRROWS; i++) {
+            for (MinionClass j : board.getRow(i)) {
+                if (j.isFrozen()) {
                     frozenCards.add(j);
                 }
             }
         }
         getFrozenCardsOnTable.putPOJO("output", frozenCards);
-        output.add(getFrozenCardsOnTable) ;
+        output.add(getFrozenCardsOnTable);
     }
 }

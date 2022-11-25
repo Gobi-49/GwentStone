@@ -3,8 +3,8 @@ package resurces.cards.hero;
 import resurces.Board;
 import resurces.Player;
 import resurces.cards.Card;
+import resurces.cards.MagicNumbers;
 import resurces.output.HeroOut;
-import resurces.output.MinionOut;
 
 import java.util.ArrayList;
 
@@ -12,32 +12,44 @@ public class Hero extends Card {
     private int health;
     private boolean player; // false->P1; true->P2
     private boolean played = false;
-    public void setHealth(int health) {
+    public final void setHealth(final int health) {
         this.health = health;
     }
-    public int getHealth() {
+    public final int getHealth() {
         return health;
     }
-    public void setPlayed(boolean played) {
+    public final void setPlayed(final boolean played) {
         this.played = played;
     }
-    public boolean isPlayed() {
+    public final boolean isPlayed() {
         return played;
     }
-    public Hero(int mana, String description, ArrayList<String> colors, String name) {
+    public Hero(final int mana, final String description, final ArrayList<String> colors,
+                final String name) {
         super(mana, description, colors, name);
-        setHealth(30);
+        setHealth(MagicNumbers.MAXHEALTHHERO);
     }
-    public String useAbility(Board board, int row, Player player) {
+
+    /**
+     * @param board represents the table where cards are placed
+     * @param row represents the row affected
+     * @param player1 represents the attacker
+     * used to be overridden
+     */
+    public String useAbility(final Board board, final int row, final Player player1) {
         return null;
     }
-    public void setPlayer(boolean player) {
+    public final void setPlayer(final boolean player) {
         this.player = player;
     }
-    public boolean isPlayer() {
+    public final boolean isPlayer() {
         return player;
     }
+
+    /**
+     * @return returns a HeroOut class used to print in the json
+     */
     public HeroOut convertToOut() {
-        return new HeroOut(getMana(),getDescription(),getColors(),getName(),getHealth());
+        return new HeroOut(getMana(), getDescription(), getColors(), getName(), getHealth());
     }
 }

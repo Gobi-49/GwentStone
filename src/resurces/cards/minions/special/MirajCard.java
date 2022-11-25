@@ -7,35 +7,50 @@ import java.util.ArrayList;
 
 public class MirajCard extends MinionClass {
 
-    public MirajCard(String name, ArrayList<String> colors, String description, int mana, int attackDamage, int health) {
+    public MirajCard(final String name, final ArrayList<String> colors, final String description,
+                     final int mana, final int attackDamage, final int health) {
         super(name, colors, description, mana, attackDamage, health);
     }
 
-    public void skyjack(MinionClass card) {
+    /**
+     * Represents the implementation of the Miraj special ability
+     * @param card is the attacked card
+     */
+    public final void skyjack(final MinionClass card) {
         int x = getHealth();
         setHealth(card.getHealth());
         card.setHealth(x);
     }
-    public String useAbility(Board board, int xAttacker, int yAttacker, int xAttacked, int yAttacked) {
+    /**
+     * Implements how the card uses the ability
+     * @param board is the table
+     * @param xAttacker x position of the attacker
+     * @param yAttacker y position of the attacker
+     * @param xAttacked x position of the attacked
+     * @param yAttacked y position of the attacked
+     * @return
+     */
+    public final String useAbility(final Board board, final int xAttacker, final int yAttacker,
+                             final int xAttacked, final int yAttacked) {
         boolean player = (xAttacker < 2); // true -> playerTwo ; false -> playerOne
-        if(xAttacker < 2 && xAttacked < 2 || xAttacker >= 2 && xAttacked >= 2) {
+        if (xAttacker < 2 && xAttacked < 2 || xAttacker >= 2 && xAttacked >= 2) {
             return "Attacked card does not belong to the enemy.";
         }
-        if(isPlayed()) {
+        if (isPlayed()) {
             return "Attacker card has already attacked this turn.";
         }
-        if(isFrozen()) {
+        if (isFrozen()) {
             return "Attacker card is frozen.";
         }
         ArrayList<MinionClass> frontRow;
-        if(!board.getRow(xAttacked).get(yAttacked).isTank()) {
-            if(player && !board.getRow(xAttacked).get(yAttacked).isTank()) {
+        if (!board.getRow(xAttacked).get(yAttacked).isTank()) {
+            if (player && !board.getRow(xAttacked).get(yAttacked).isTank()) {
                 frontRow = board.getRow(2);
             } else {
                 frontRow = board.getRow(1);
             }
-            for(MinionClass i :frontRow) {
-                if(i.isTank()) {
+            for (MinionClass i :frontRow) {
+                if (i.isTank()) {
                     return "Attacked card is not of type 'Tank'.";
                 }
             }
